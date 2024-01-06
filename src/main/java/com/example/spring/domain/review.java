@@ -1,5 +1,6 @@
 package com.example.spring.domain;
 import com.example.spring.domain.common.BaseEntity;
+import com.example.spring.domain.user.domain.Member;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,7 +28,7 @@ public class review extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private member member;
+    private Member member;
 
     @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
     private List<review_image> reviewImageList = new ArrayList<>();

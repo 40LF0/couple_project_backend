@@ -2,6 +2,7 @@ package com.example.spring.domain;
 
 import com.example.spring.domain.common.BaseEntity;
 import com.example.spring.domain.enums.plus_minus;
+import com.example.spring.domain.user.domain.Member;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,5 +25,5 @@ public class point_history extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private member member;
+    private Member member;
 }

@@ -1,7 +1,7 @@
-package com.example.spring.domain;
+package com.example.spring.domain.user.domain;
 
+import com.example.spring.domain.*;
 import com.example.spring.domain.common.BaseEntity;
-import com.example.spring.domain.enums.gender;
 import com.example.spring.domain.enums.status;
 import com.example.spring.domain.mapping.member_agree;
 import jakarta.persistence.*;
@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class member extends BaseEntity {
+public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,10 +33,20 @@ public class member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private gender gender;
 
+    private String providerId;
+
+    private String provider;
+
+    private String email;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @Enumerated(EnumType.STRING)
     private status status;
 
     private LocalDate inactive_date;
+
 
     @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
     private List<member_agree> memberAgreeList = new ArrayList<>();
@@ -45,7 +55,7 @@ public class member extends BaseEntity {
     private List<review> reviewList = new ArrayList<>();
 
     @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
-    private List<coupon> couponList = new ArrayList<>();
+    private List<com.example.spring.domain.coupon> couponList = new ArrayList<>();
 
     @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
     private List<point_history> pointHistoryList = new ArrayList<>();
@@ -55,4 +65,12 @@ public class member extends BaseEntity {
 
     @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
     private List<qna> qnaList = new ArrayList<>();
+
+    public void updateName(String name){
+        this.name = name;
+    }
+
+    public void updateProfileImage(String imageUrl){
+        this.profileUrl = imageUrl;
+    }
 }

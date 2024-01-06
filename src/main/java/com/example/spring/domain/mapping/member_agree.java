@@ -2,7 +2,7 @@ package com.example.spring.domain.mapping;
 
 
 import com.example.spring.domain.common.BaseEntity;
-import com.example.spring.domain.member;
+import com.example.spring.domain.user.domain.Member;
 import com.example.spring.domain.terms;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ public class member_agree extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private member member;
+    private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "terms_id")

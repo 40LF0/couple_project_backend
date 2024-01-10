@@ -12,13 +12,13 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class date_spot_region extends BaseEntity{
+public class DateSpotRegion extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long dateSpotRegionId;
 
     private String region;
 
-    @OneToMany (mappedBy = "date_spot", cascade = CascadeType.ALL)
-    private List<date_spot> dateSpotList = new ArrayList<>();
+    @OneToMany (mappedBy = "dateSpotRegion", cascade = CascadeType.ALL)
+    private List<DateSpot> dateSpotList = new ArrayList<>();
 }

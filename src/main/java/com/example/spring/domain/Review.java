@@ -11,10 +11,10 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class review extends BaseEntity {
+public class Review extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long reviewId;
 
     private String title;
     private String body;
@@ -26,9 +26,9 @@ public class review extends BaseEntity {
     private int heart;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private member member;
+    @JoinColumn(name = "memberId")
+    private Member member;
 
-    @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
-    private List<review_image> reviewImageList = new ArrayList<>();
+    @OneToMany (mappedBy = "review", cascade = CascadeType.ALL)
+    private List<ReviewImage> reviewImageList = new ArrayList<>();
 }

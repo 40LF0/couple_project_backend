@@ -1,5 +1,7 @@
 package com.example.spring.domain;
+
 import com.example.spring.domain.common.BaseEntity;
+import com.example.spring.domain.enums.AnswerStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,14 +10,18 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class review_image extends BaseEntity{
+public class Qna extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long qnaId;
 
-    private String img_url;
+    private String title;
+    private String body;
+
+    @Enumerated(EnumType.STRING)
+    private AnswerStatus answerStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "review_id")
-    private review review;
+    @JoinColumn(name = "memberId")
+    private Member member;
 }

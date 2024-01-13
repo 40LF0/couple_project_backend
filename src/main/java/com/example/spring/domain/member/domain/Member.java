@@ -25,12 +25,12 @@ public class Member extends BaseEntity {
 
     private String name;
     private String nickname;
-    private int age;
+    private Integer age;
     private String address;
     private String profileUrl;
 
-    private int point;
-    private int coupon;
+    private Integer point;
+    private Integer coupon;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;

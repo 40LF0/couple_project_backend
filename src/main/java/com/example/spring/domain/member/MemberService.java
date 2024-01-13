@@ -17,6 +17,8 @@ public class MemberService {
         return memberRepository.findById(memberId).orElseThrow(() ->
                 new GeneralException(ErrorStatus.MEMBER_NOT_FOUND));
     }
+
+    // 만약, member 함수의 제약 조건을 추가한다면, 아래 더미 함수에도 해당 내용 반영해 주세요!
     @Transactional
     public Long saveAndGetDummyID(){
         Member member = Member.builder()

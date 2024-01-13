@@ -1,7 +1,7 @@
 package com.example.spring.domain;
 
 import com.example.spring.domain.common.BaseEntity;
-import com.example.spring.domain.enums.plus_minus;
+import com.example.spring.domain.enums.PlusMinus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,19 +10,19 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class point_history extends BaseEntity {
+public class PointHistory extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long pointHistoryId;
 
     private int point;
 
     @Enumerated(EnumType.STRING)
-    private plus_minus plus_minus;
+    private PlusMinus plusMinus;
 
     private String body;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private member member;
+    @JoinColumn(name = "memberId")
+    private Member member;
 }

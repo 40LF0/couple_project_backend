@@ -1,6 +1,7 @@
 package com.example.spring.domain;
 
 import com.example.spring.domain.common.BaseEntity;
+import com.example.spring.domain.enums.TermsStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,14 +10,14 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class recommendation extends BaseEntity{
+public class Term extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long termsId;
 
-    private String spot_name;
+    private String title;
+    private String body;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private member member;
+    @Enumerated(EnumType.STRING)
+    private TermsStatus termsStatus;
 }

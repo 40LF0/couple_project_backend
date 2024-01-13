@@ -1,7 +1,7 @@
 package com.example.spring.domain;
 
 import com.example.spring.domain.common.BaseEntity;
-import com.example.spring.domain.enums.category;
+import com.example.spring.domain.enums.Category;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,13 +13,13 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class date_spot_category extends BaseEntity{
+public class DateSpotCategory extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long dateSpotCategoryId;
 
-    private category category;
+    private Category category;
 
-    @OneToMany (mappedBy = "date_spot", cascade = CascadeType.ALL)
-    private List<date_spot> dateSpotList = new ArrayList<>();
+    @OneToMany (mappedBy = "dateSpotCategory", cascade = CascadeType.ALL)
+    private List<DateSpot> dateSpotList = new ArrayList<>();
 }

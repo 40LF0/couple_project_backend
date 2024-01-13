@@ -1,9 +1,9 @@
 package com.example.spring.domain;
 
 import com.example.spring.domain.common.BaseEntity;
-import com.example.spring.domain.enums.gender;
-import com.example.spring.domain.enums.status;
-import com.example.spring.domain.mapping.member_agree;
+import com.example.spring.domain.enums.Gender;
+import com.example.spring.domain.enums.Status;
+import com.example.spring.domain.mapping.MemberAgree;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,10 +16,11 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class member extends BaseEntity {
+public class Member extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long memberId;
 
     private String name;
     private String nickname;
@@ -31,28 +32,28 @@ public class member extends BaseEntity {
     private int coupon;
 
     @Enumerated(EnumType.STRING)
-    private gender gender;
+    private Gender gender;
 
     @Enumerated(EnumType.STRING)
-    private status status;
+    private Status status;
 
-    private LocalDate inactive_date;
-
-    @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
-    private List<member_agree> memberAgreeList = new ArrayList<>();
+    private LocalDate inactiveDate;
 
     @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
-    private List<review> reviewList = new ArrayList<>();
+    private List<MemberAgree> memberAgreeList = new ArrayList<>();
 
     @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
-    private List<coupon> couponList = new ArrayList<>();
+    private List<Review> reviewList = new ArrayList<>();
 
     @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
-    private List<point_history> pointHistoryList = new ArrayList<>();
+    private List<Coupon> couponList = new ArrayList<>();
 
     @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
-    private List<recommendation> recommendationList = new ArrayList<>();
+    private List<PointHistory> pointHistoryList = new ArrayList<>();
 
     @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
-    private List<qna> qnaList = new ArrayList<>();
+    private List<Recommendation> recommendationList = new ArrayList<>();
+
+    @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Qna> qnaList = new ArrayList<>();
 }

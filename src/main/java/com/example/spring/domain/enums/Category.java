@@ -1,6 +1,6 @@
 package com.example.spring.domain.enums;
 
-public enum category {
+public enum Category {
     RESTAURANT,
     CAFE,
     BAR,

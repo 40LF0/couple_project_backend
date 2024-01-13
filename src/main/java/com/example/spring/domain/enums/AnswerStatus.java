@@ -1,5 +1,5 @@
 package com.example.spring.domain.enums;
 
-public enum answer_status {
+public enum AnswerStatus {
     WAITING, COMPLETED
 }

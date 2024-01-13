@@ -1,4 +1,4 @@
-package com.example.spring.domain.enums;
+package com.example.spring.domain.member.enums;
 
 public enum AnswerStatus {
     WAITING, COMPLETED

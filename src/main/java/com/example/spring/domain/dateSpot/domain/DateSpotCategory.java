@@ -1,7 +1,7 @@
-package com.example.spring.domain;
+package com.example.spring.domain.dateSpot.domain;
 
-import com.example.spring.domain.common.BaseEntity;
-import com.example.spring.domain.enums.Category;
+import com.example.spring.global.baseEntity.BaseEntity;
+import com.example.spring.domain.dateSpot.enums.Category;
 import jakarta.persistence.*;
 import lombok.*;
 

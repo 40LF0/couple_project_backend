@@ -1,5 +1,5 @@
-package com.example.spring.domain;
-import com.example.spring.domain.common.BaseEntity;
+package com.example.spring.domain.review.domain;
+import com.example.spring.global.baseEntity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,6 +1,6 @@
-package com.example.spring.domain;
+package com.example.spring.domain.member.domain;
 
-import com.example.spring.domain.common.BaseEntity;
+import com.example.spring.global.baseEntity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,12 +9,14 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Recommendation extends BaseEntity{
+public class Coupon extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long recommendationId;
+    private Long couponId;
 
-    private String spotName;
+    private String name;
+
+    private String body;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")

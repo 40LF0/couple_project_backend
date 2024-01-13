@@ -1,9 +1,10 @@
-package com.example.spring.domain;
+package com.example.spring.domain.member.domain;
 
-import com.example.spring.domain.common.BaseEntity;
-import com.example.spring.domain.enums.Gender;
-import com.example.spring.domain.enums.Status;
-import com.example.spring.domain.mapping.MemberAgree;
+import com.example.spring.domain.dateSpot.domain.Recommendation;
+import com.example.spring.domain.review.domain.Review;
+import com.example.spring.global.baseEntity.BaseEntity;
+import com.example.spring.domain.member.enums.Gender;
+import com.example.spring.domain.member.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
 

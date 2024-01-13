@@ -1,7 +1,7 @@
-package com.example.spring.domain;
+package com.example.spring.domain.member.domain;
 
-import com.example.spring.domain.common.BaseEntity;
-import com.example.spring.domain.enums.PlusMinus;
+import com.example.spring.global.baseEntity.BaseEntity;
+import com.example.spring.domain.member.enums.PlusMinus;
 import jakarta.persistence.*;
 import lombok.*;
 

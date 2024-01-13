@@ -1,6 +1,6 @@
-package com.example.spring.domain;
+package com.example.spring.domain.dateSpot.domain;
 
-import com.example.spring.domain.common.BaseEntity;
+import com.example.spring.global.baseEntity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,13 +12,13 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class DateSpotCostBand extends BaseEntity {
+public class DateSpotRegion extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long dateSpotCostBandId;
+    private Long dateSpotRegionId;
 
-    private Long cost;
+    private String region;
 
-    @OneToMany (mappedBy = "dateSpotCostBand", cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "dateSpotRegion", cascade = CascadeType.ALL)
     private List<DateSpot> dateSpotList = new ArrayList<>();
 }

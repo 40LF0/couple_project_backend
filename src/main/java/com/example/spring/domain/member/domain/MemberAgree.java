@@ -1,9 +1,7 @@
-package com.example.spring.domain.mapping;
+package com.example.spring.domain.member.domain;
 
 
-import com.example.spring.domain.common.BaseEntity;
-import com.example.spring.domain.Member;
-import com.example.spring.domain.Term;
+import com.example.spring.global.baseEntity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

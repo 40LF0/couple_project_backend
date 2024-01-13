@@ -1,7 +1,7 @@
 package com.example.spring.domain;
 
 import com.example.spring.domain.common.BaseEntity;
-import com.example.spring.domain.enums.Optional;
+import com.example.spring.domain.enums.TermsStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Terms extends BaseEntity {
+public class Term extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long termsId;
@@ -19,5 +19,5 @@ public class Terms extends BaseEntity {
     private String body;
 
     @Enumerated(EnumType.STRING)
-    private Optional optional;
+    private TermsStatus termsStatus;
 }

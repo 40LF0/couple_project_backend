@@ -34,7 +34,11 @@ public enum ErrorStatus implements BaseErrorCode {
     // Region Error
     REGION_NOT_FOUND(HttpStatus.NOT_FOUND, "REGION4001", "지역이 없습니다."),
     // Category Error
-    CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "CATEGORY4001", "카테고리가 없습니다.");
+    CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "CATEGORY4001", "카테고리가 없습니다."),
+
+    // 리뷰 관련 에러
+    REVIEW_PICTURE_QUANTITY_ERROR(HttpStatus.BAD_REQUEST, "REVIEW4001", "리뷰에 첨부된 사진이 없거나 너무 많습니다."),
+    REVIEW_SPOT_QUANTITY_ERROR(HttpStatus.BAD_REQUEST, "REVIEW4002", "리뷰 장소가 없거나 너무 많습니다.");
 
 
     private final HttpStatus httpStatus;

@@ -29,8 +29,8 @@ public class Member extends BaseEntity {
     private String address;
     private String profileUrl;
 
-    private Integer point;
-    private Integer coupon;
+    private int point = 0;
+    private int coupon = 0;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;

@@ -24,9 +24,6 @@ public class Member extends BaseEntity {
     private Long memberId;
 
     private String name;
-    private String nickname;
-    private Integer age;
-    private String address;
     private String profileUrl;
 
     private int point = 0;

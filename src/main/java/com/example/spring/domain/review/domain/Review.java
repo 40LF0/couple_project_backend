@@ -35,6 +35,28 @@ public class Review extends BaseEntity {
     @OneToMany (mappedBy = "review", cascade = CascadeType.ALL)
     private List<ReviewImage> reviewImageList = new ArrayList<>();
 
+    public List<String> fetchSpotList(){
+        List<String> spotList = new ArrayList<>();
+        if(spot1 != null && !spot1.isBlank()){
+            spotList.add(spot1);
+        }
+        if(spot2 != null && !spot2.isBlank()){
+            spotList.add(spot2);
+        }
+        if(spot3 != null && !spot3.isBlank()){
+            spotList.add(spot3);
+        }
+        return spotList;
+    }
+    public List<String> fetchImageUrlList(){
+        List<String> imageLists = new ArrayList<>();
+        for (ReviewImage image : reviewImageList) {
+            if(image.getImgUrl() != null && !image.getImgUrl().isBlank()){
+                imageLists.add(image.getImgUrl());
+            }
+        }
+        return imageLists;
+    }
     public void updateSpots(List<String> spots){
         Set<String> uniqueSpots = new HashSet<>(spots);
 

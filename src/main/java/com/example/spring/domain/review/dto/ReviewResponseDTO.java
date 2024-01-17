@@ -1,0 +1,28 @@
+package com.example.spring.domain.review.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+public class ReviewResponseDTO {
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ReviewEntityDTO{
+        Long reviewId;
+        Long memberId;
+        String title;
+        String body;
+        int heart;
+        List<String> spotList;
+        List<String> imageUrlList;
+    }
+}

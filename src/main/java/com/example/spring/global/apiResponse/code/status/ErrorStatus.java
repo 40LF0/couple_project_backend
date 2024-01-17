@@ -38,7 +38,8 @@ public enum ErrorStatus implements BaseErrorCode {
 
     // 리뷰 관련 에러
     REVIEW_IMAGE_QUANTITY_ERROR(HttpStatus.BAD_REQUEST, "REVIEW4001", "리뷰에 첨부된 사진이 없거나 너무 많습니다."),
-    REVIEW_SPOT_QUANTITY_ERROR(HttpStatus.BAD_REQUEST, "REVIEW4002", "리뷰 장소가 없거나 너무 많습니다.");
+    REVIEW_SPOT_QUANTITY_ERROR(HttpStatus.BAD_REQUEST, "REVIEW4002", "리뷰 장소가 없거나 너무 많습니다."),
+    REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "REVIEW4002", "후기가 없습니다");
 
 
     private final HttpStatus httpStatus;

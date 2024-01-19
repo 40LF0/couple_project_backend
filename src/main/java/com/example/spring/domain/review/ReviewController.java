@@ -15,14 +15,20 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("")
-    public ApiResponse<Boolean> join(@RequestBody @Valid ReviewRequestDTO.ReviewSaveDto request){
+    public ApiResponse<ReviewResponseDTO.ReviewEntityDTO> postReview(@RequestBody @Valid ReviewRequestDTO.ReviewDTO request){
         Review review = reviewService.createReview(request);
-        return ApiResponse.onSuccess(Boolean.TRUE);
+        return ApiResponse.onSuccess(reviewService.toReviewEntityDTO(review));
     }
 
     @GetMapping("")
-    public ApiResponse<ReviewResponseDTO.ReviewEntityDTO> get(@RequestParam Long reviewId){
-        ReviewResponseDTO.ReviewEntityDTO dto = reviewService.getReviewInfo(reviewId);
-        return ApiResponse.onSuccess(dto);
+    public ApiResponse<ReviewResponseDTO.ReviewEntityDTO> getReview(@RequestParam Long reviewId){
+        Review review = reviewService.findById(reviewId);
+        return ApiResponse.onSuccess(reviewService.toReviewEntityDTO(review));
+    }
+
+    @PutMapping("")
+    public ApiResponse<ReviewResponseDTO.ReviewEntityDTO> putReview(@RequestBody @Valid ReviewRequestDTO.ReviewDTO request, @RequestParam Long reviewId) {
+        Review review = reviewService.updateReview(request, reviewId);
+        return ApiResponse.onSuccess(reviewService.toReviewEntityDTO(review));
     }
 }

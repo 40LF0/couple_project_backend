@@ -11,23 +11,40 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Objects;
+
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class ReviewService {
     private final ReviewRepository reviewRepository;
+    private final ReviewImageRepository reviewImageRepository;
     private final MemberService memberService;
     @Transactional
-    public Review createReview(ReviewRequestDTO.ReviewSaveDto request) {
+    public Review createReview(ReviewRequestDTO.ReviewDTO request) {
         Review review = toReviewEntity(request);
         reviewRepository.save(review);
         return review;
     }
 
-    public ReviewResponseDTO.ReviewEntityDTO getReviewInfo(Long reviewId) {
+    @Transactional
+    public Review updateReview(ReviewRequestDTO.ReviewDTO request, Long reviewId) {
         Review review = findById(reviewId);
-        return toReviewEntityDTO(review);
+        if (!Objects.equals(review.getMember().getMemberId(), request.getMemberId())){
+            throw new GeneralException(ErrorStatus.REVIEW_NOT_FOUND);
+        }
+        review.updateTitle(request.getTitle());
+        review.updateBody(request.getBody());
+        review.updateSpots(request.getSpotList());
+        updateReviewImages(review, request.getImageUrlList());
+        return review;
+    }
+
+    private void updateReviewImages(Review review, List<String> newImageUrlList) {
+        reviewImageRepository.deleteAll(review.getReviewImageList());
+        review.updateReviewImages(newImageUrlList);
     }
 
     public Review findById(Long reviewId){
@@ -35,7 +52,7 @@ public class ReviewService {
                 new GeneralException(ErrorStatus.REVIEW_NOT_FOUND));
     }
 
-    private ReviewResponseDTO.ReviewEntityDTO toReviewEntityDTO(Review review) {
+    public ReviewResponseDTO.ReviewEntityDTO toReviewEntityDTO(Review review) {
         return ReviewResponseDTO.ReviewEntityDTO
                 .builder()
                 .reviewId(review.getReviewId())
@@ -47,7 +64,7 @@ public class ReviewService {
                 .build();
     }
 
-    private Review toReviewEntity(ReviewRequestDTO.ReviewSaveDto request) {
+    private Review toReviewEntity(ReviewRequestDTO.ReviewDTO request) {
         Member member = memberService.findById(request.getMemberId());
         Review review = Review.builder()
                 .title(request.getTitle())
@@ -58,6 +75,5 @@ public class ReviewService {
         review.updateSpots(request.getSpotList());
         return review;
     }
-
 
 }

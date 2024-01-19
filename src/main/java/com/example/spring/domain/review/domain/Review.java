@@ -76,9 +76,22 @@ public class Review extends BaseEntity {
         if(uniqueImages.isEmpty() || uniqueImages.size() > 5) {
             throw new GeneralException(ErrorStatus.REVIEW_IMAGE_QUANTITY_ERROR);
         }
-
+        if(reviewImageList != null){
+            reviewImageList.clear();
+        }
         reviewImageList = uniqueImages.stream()
-                .map(imageUrl -> ReviewImage.builder().imgUrl(imageUrl).build())
+                .map(imageUrl -> ReviewImage.builder()
+                        .imgUrl(imageUrl)
+                        .review(this)
+                        .build())
                 .collect(Collectors.toList());
+    }
+
+    public void updateTitle(String title) {
+        this.title = title;
+    }
+
+    public void updateBody(String body) {
+        this.body = body;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.spring.domain.user.domain;
 
 import com.example.spring.domain.*;
+import com.example.spring.domain.auth.domain.Authority;
 import com.example.spring.domain.common.BaseEntity;
 import com.example.spring.domain.enums.status;
 import com.example.spring.domain.mapping.member_agree;
@@ -10,6 +11,7 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -19,6 +21,7 @@ import java.util.List;
 public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
     private Long id;
 
     private String name;
@@ -46,6 +49,15 @@ public class Member extends BaseEntity {
     private status status;
 
     private LocalDate inactive_date;
+
+    private boolean activated;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_authority",
+            joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "member_id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
+    private Set<Authority> authorities;
 
 
     @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)

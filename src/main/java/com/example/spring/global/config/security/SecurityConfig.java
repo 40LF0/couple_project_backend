@@ -1,4 +1,4 @@
-package com.example.spring.global.config;
+package com.example.spring.global.config.security;
 
 import com.example.spring.global.jwt.JwtAccessDeniedHandler;
 import com.example.spring.global.jwt.JwtAuthenticationEntryPoint;

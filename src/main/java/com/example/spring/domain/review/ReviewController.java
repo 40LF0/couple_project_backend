@@ -6,10 +6,13 @@ import com.example.spring.domain.review.dto.ReviewResponseDTO;
 import com.example.spring.global.apiResponse.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/reviews")
+@RequestMapping("/review")
 @RequiredArgsConstructor
 public class ReviewController {
     private final ReviewService reviewService;
@@ -30,5 +33,11 @@ public class ReviewController {
     public ApiResponse<ReviewResponseDTO.ReviewEntityDTO> putReview(@RequestBody @Valid ReviewRequestDTO.ReviewDTO request, @RequestParam Long reviewId) {
         Review review = reviewService.updateReview(request, reviewId);
         return ApiResponse.onSuccess(reviewService.toReviewEntityDTO(review));
+    }
+
+    @GetMapping("/previews")
+    public ApiResponse<Page<ReviewResponseDTO.PreviewDTO>> getPreviewList(@Nullable @RequestParam Long memberId, Pageable pageable){
+        Page<ReviewResponseDTO.PreviewDTO> previews = reviewService.getPreviewList(memberId,pageable);
+        return ApiResponse.onSuccess(previews);
     }
 }

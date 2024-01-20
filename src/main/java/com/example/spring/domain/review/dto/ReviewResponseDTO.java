@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ReviewResponseDTO {
@@ -24,5 +26,20 @@ public class ReviewResponseDTO {
         int heart;
         List<String> spotList;
         List<String> imageUrlList;
+        LocalDateTime createdAt;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class PreviewDTO{
+        Long reviewId;
+        Long memberId;
+        String title;
+        int heart;
+        List<String> spotList;
+        String imageUrl;
+        LocalDateTime createdAt;
     }
 }

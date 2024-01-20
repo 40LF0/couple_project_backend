@@ -1,7 +1,7 @@
 package com.example.spring.domain.review;
 
 import com.example.spring.domain.member.domain.Member;
-import com.example.spring.domain.member.MemberService;
+import com.example.spring.domain.member.application.MemberService;
 import com.example.spring.domain.review.domain.Review;
 import com.example.spring.domain.review.dto.ReviewRequestDTO;
 import lombok.RequiredArgsConstructor;

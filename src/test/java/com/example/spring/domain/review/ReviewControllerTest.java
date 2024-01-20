@@ -1,6 +1,6 @@
 package com.example.spring.domain.review;
 
-import com.example.spring.domain.member.MemberService;
+import com.example.spring.domain.member.application.MemberService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

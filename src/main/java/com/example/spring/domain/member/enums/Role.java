@@ -1,4 +1,4 @@
-package com.example.spring.domain.user.domain;
+package com.example.spring.domain.member.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +8,6 @@ import lombok.Getter;
 public enum Role {
     ADMIN("ROLE_ADMIN"),
     USER("ROLE_USER");
-
     private String value;
-}
+
+    }

@@ -1,6 +1,6 @@
 package com.example.spring.domain.auth.domain;
 
-import com.example.spring.domain.common.BaseEntity;
+import com.example.spring.global.baseEntity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
@@ -27,6 +27,11 @@ public class Token extends BaseEntity {
     public Token(String userEmail, String refreshToken) {
         this.userEmail = userEmail;
         this.refreshToken = refreshToken;
+    }
+
+    public Token updateValue(String refreshToken) {
+        this.refreshToken = refreshToken;
+        return this;
     }
 
 }

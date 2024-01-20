@@ -1,4 +1,4 @@
-package com.example.spring.domain.user.exception;
+package com.example.spring.domain.member.exception;
 
 public class InvalidUserException extends RuntimeException {
 

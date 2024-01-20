@@ -2,7 +2,6 @@ package com.example.spring.global.jwt;
 
 import com.example.spring.domain.auth.application.CustomUserDetailService;
 import com.example.spring.domain.auth.dto.TokenMapping;
-import com.example.spring.global.config.security.OAuth2Config;
 import com.example.spring.global.config.security.UserPrincipal;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -31,7 +30,6 @@ public class TokenProvider {
     private static final String AUTHORITIES_KEY = "auth";
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;            // 30분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
-    private OAuth2Config oAuth2Config;
 
     private Key key;
     @Autowired

@@ -5,6 +5,7 @@ import com.example.spring.domain.auth.dto.AuthRes;
 import com.example.spring.domain.auth.dto.RefreshTokenReq;
 import com.example.spring.domain.auth.dto.SignUpReq;
 import com.example.spring.domain.auth.dto.SignInReq;
+import com.example.spring.global.apiResponse.ApiResponse;
 import com.example.spring.global.payload.ResponseCustom;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,21 +22,21 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(value="/sign-up")
-    public ResponseCustom<AuthRes> signUp(@RequestBody SignUpReq signUpReq
+    public ApiResponse<AuthRes> signUp(@RequestBody @Valid SignUpReq signUpReq
     ) {
-        return ResponseCustom.OK(authService.signUp(signUpReq));
+        return ApiResponse.onSuccess(authService.signUp(signUpReq));
     }
 
 
     @PostMapping(value="/sign-in")
-    public ResponseCustom<AuthRes> signIn(@RequestBody SignInReq signInReq
+    public ApiResponse<AuthRes> signIn(@RequestBody @Valid SignInReq signInReq
     ) {
-        return ResponseCustom.OK(authService.signIn(signInReq));
+        return ApiResponse.onSuccess(authService.signIn(signInReq));
     }
 
     @PostMapping("/refresh")
-    public ResponseCustom<AuthRes> reissue(@RequestBody RefreshTokenReq refreshTokenReq) {
-        return ResponseCustom.OK(authService.refresh(refreshTokenReq));
+    public ApiResponse<AuthRes> reissue(@RequestBody RefreshTokenReq refreshTokenReq) {
+        return ApiResponse.onSuccess(authService.refresh(refreshTokenReq));
     }
 
 

@@ -5,16 +5,12 @@ import com.example.spring.domain.member.domain.repository.MemberRepository;
 import com.example.spring.global.config.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -41,7 +37,5 @@ public class CustomUserDetailService implements UserDetailsService {
         }
         throw new UsernameNotFoundException("유효하지 않는 유저입니다.");
     }
-
-
 
 }

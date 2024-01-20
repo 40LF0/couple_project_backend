@@ -33,11 +33,11 @@ public class AuthController {
         return ResponseCustom.OK(authService.signIn(signInReq));
     }
 
-//    @PostMapping(value = "/refresh")
-//    public ResponseCustom<AuthRes> refresh(@Valid @RequestBody RefreshTokenReq tokenRefreshRequest
-//    ) {
-//        return ResponseCustom.OK(authService.refresh(tokenRefreshRequest));
-//    }
+    @PostMapping("/refresh")
+    public ResponseCustom<AuthRes> reissue(@RequestBody RefreshTokenReq refreshTokenReq) {
+        return ResponseCustom.OK(authService.refresh(refreshTokenReq));
+    }
+
 
 //    @PostMapping(value="/sign-out")
 //    public ResponseCustom<Message> signOut(@Valid @RequestBody RefreshTokenReq tokenRefreshRequest

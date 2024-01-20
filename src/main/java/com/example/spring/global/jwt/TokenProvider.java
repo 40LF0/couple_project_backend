@@ -7,6 +7,7 @@ import com.example.spring.global.config.security.UserPrincipal;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,7 +34,7 @@ public class TokenProvider {
     private OAuth2Config oAuth2Config;
 
     private Key key;
-
+    @Autowired
     private CustomUserDetailService customUserDetailService;
 
     public TokenProvider(@Value("${jwt.secret}") String secretKey) {
@@ -82,9 +83,9 @@ public class TokenProvider {
 
         String accessToken = Jwts.builder()
                 .setSubject(Long.toString(userPrincipal.getId()))
-                .setIssuedAt(new Date())
-                .setExpiration(accessTokenExpiresIn)
+                .claim(AUTHORITIES_KEY, authorities)
                 .signWith(key, SignatureAlgorithm.HS512)
+                .setExpiration(accessTokenExpiresIn)
                 .compact();
 
 
@@ -102,7 +103,7 @@ public class TokenProvider {
 
     // JWT 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
     public Authentication getAuthentication(String accessToken) {
-        //토큰 복호화
+        // 토큰 복호화
         Claims claims = parseClaims(accessToken);
 
         if (claims.get(AUTHORITIES_KEY) == null) {
@@ -119,7 +120,6 @@ public class TokenProvider {
         UserDetails principal = new User(claims.getSubject(), "", authorities);
 
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
-
     }
 
     private Claims parseClaims(String accessToken) {
@@ -129,6 +129,15 @@ public class TokenProvider {
             return e.getClaims();
         }
     }
+    public Long getUserIdFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        return Long.parseLong(claims.getSubject());
+    }
 
     public UsernamePasswordAuthenticationToken getAuthenticationByEmail(String email){
         UserDetails userDetails = customUserDetailService.loadUserByUsername(email);
@@ -136,9 +145,17 @@ public class TokenProvider {
         return authentication;
     }
 
+    public UsernamePasswordAuthenticationToken getAuthenticationById(String token){
+        Long userId = getUserIdFromToken(token);
+        UserDetails userDetails = customUserDetailService.loadUserById(userId);
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        return authentication;
+    }
+
+
     public Long getExpiration(String token) {
         // accessToken 남은 유효시간
-        Date expiration = Jwts.parserBuilder().setSigningKey(oAuth2Config.getAuth().getTokenSecret()).build().parseClaimsJws(token).getBody().getExpiration();
+        Date expiration = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getExpiration();
         // 현재 시간
         Long now = new Date().getTime();
         //시간 계산

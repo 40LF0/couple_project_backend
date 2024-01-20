@@ -113,15 +113,14 @@ public class AuthService {
         if (!tokenProvider.validateToken(tokenRefreshRequest.getRefreshToken())) {
             throw new RuntimeException("Refresh Token 이 유효하지 않습니다.");
         }
-        // 2. Access Token 에서 Member ID 가져오기
-        Authentication authentication = tokenProvider.getAuthentication(tokenRefreshRequest.getRefreshToken());
+
+        // 2. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
+        Token token = tokenRepository.findByRefreshToken(tokenRefreshRequest.getRefreshToken())
+                .orElseThrow(() -> new RuntimeException("Refresh Token 이 유효하지 않습니다."));
+        Authentication authentication = tokenProvider.getAuthenticationByEmail(token.getUserEmail());
 
 
-        // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
-        Token token = tokenRepository.findByUserEmail(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("로그아웃 된 사용자입니다."));
-
-        //4. refresh token 정보 값을 업데이트 한다.
+        //3. refresh token 정보 값을 업데이트 한다.
         //시간 유효성 확인
         TokenMapping tokenMapping;
 

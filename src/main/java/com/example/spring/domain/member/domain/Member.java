@@ -1,6 +1,7 @@
 package com.example.spring.domain.member.domain;
 
 import com.example.spring.domain.dateSpot.domain.Recommendation;
+import com.example.spring.domain.qna.domain.Qna;
 import com.example.spring.domain.review.domain.Review;
 import com.example.spring.global.baseEntity.BaseEntity;
 import com.example.spring.domain.member.enums.Gender;

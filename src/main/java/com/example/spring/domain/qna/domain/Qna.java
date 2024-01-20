@@ -1,5 +1,6 @@
-package com.example.spring.domain.member.domain;
+package com.example.spring.domain.qna.domain;
 
+import com.example.spring.domain.member.domain.Member;
 import com.example.spring.global.baseEntity.BaseEntity;
 import com.example.spring.domain.member.enums.AnswerStatus;
 import jakarta.persistence.*;

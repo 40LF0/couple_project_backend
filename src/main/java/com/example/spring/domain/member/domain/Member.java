@@ -1,9 +1,8 @@
 package com.example.spring.domain.member.domain;
 
-import com.example.spring.domain.auth.domain.Authority;
 import com.example.spring.domain.dateSpot.domain.Recommendation;
+import com.example.spring.domain.member.enums.Role;
 import com.example.spring.domain.review.domain.Review;
-import com.example.spring.domain.user.domain.Role;
 import com.example.spring.global.baseEntity.BaseEntity;
 import com.example.spring.domain.member.enums.Gender;
 import com.example.spring.domain.member.enums.Status;
@@ -13,9 +12,8 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-@Entity
+@Entity(name = "members")
 @Builder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -28,6 +26,8 @@ public class Member extends BaseEntity {
 
     private String name;
     private String profileUrl;
+
+    private String password;
 
     private int point = 0;
     private int coupon = 0;
@@ -49,12 +49,6 @@ public class Member extends BaseEntity {
 
     private LocalDate inactiveDate;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_authority",
-            joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "member_id")},
-            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
-    private Set<Authority> authorities;
 
     @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberAgree> memberAgreeList = new ArrayList<>();

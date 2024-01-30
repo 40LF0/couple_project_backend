@@ -27,7 +27,7 @@ public enum ErrorStatus implements BaseErrorCode {
 
     PAGE_FORMAT_BAD_REQUEST(HttpStatus.BAD_REQUEST,"PAGE4001","잘못된 페이지 번호 형식입니다"),
 
-    // Ror test
+    // For test
     TEMP_EXCEPTION(HttpStatus.BAD_REQUEST, "TEMP4001", "이거는 테스트"),
     // Region Error
     STORE_NOT_FOUND(HttpStatus.NOT_FOUND, "STORE4001", "가게가 없습니다."),
@@ -38,8 +38,10 @@ public enum ErrorStatus implements BaseErrorCode {
 
     // 리뷰 관련 에러
     REVIEW_IMAGE_QUANTITY_ERROR(HttpStatus.BAD_REQUEST, "REVIEW4001", "리뷰에 첨부된 사진이 없거나 너무 많습니다."),
-    REVIEW_SPOT_QUANTITY_ERROR(HttpStatus.BAD_REQUEST, "REVIEW4002", "리뷰 장소가 없거나 너무 많습니다.");
+    REVIEW_SPOT_QUANTITY_ERROR(HttpStatus.BAD_REQUEST, "REVIEW4002", "리뷰 장소가 없거나 너무 많습니다."),
 
+    // 문의 관련 에러
+    QNA_NOT_FOUND(HttpStatus.NOT_FOUND, "QNA4001","문의가 없습니다");
 
     private final HttpStatus httpStatus;
     private final String code;

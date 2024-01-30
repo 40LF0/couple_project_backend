@@ -2,14 +2,15 @@ package com.example.spring.domain.qna;
 
 import com.example.spring.domain.qna.domain.Qna;
 import com.example.spring.domain.qna.dto.QnaRequestDTO;
+import com.example.spring.domain.qna.dto.QnaResponseDTO;
 import com.example.spring.global.apiResponse.ApiResponse;
 import com.example.spring.domain.qna.QnaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -17,9 +18,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class QnaController {
     private final QnaService qnaService;
 
-    @PostMapping("/")
-    public ApiResponse<Boolean> join(@RequestBody @Valid QnaRequestDTO.QnaSaveDto request){
-        Qna qna = qnaService.createQna(request);
-        return ApiResponse.onSuccess(Boolean.TRUE);
+    @PostMapping("")
+    public ApiResponse<QnaResponseDTO.QnaEntityDto> join(@RequestBody @Valid QnaRequestDTO.QnaSaveDto request){
+        QnaResponseDTO.QnaEntityDto qnaDTO = qnaService.createQna(request);
+        return ApiResponse.onSuccess(qnaDTO);
     }
+
+    @GetMapping("")
+    public ApiResponse<QnaResponseDTO.QnaEntityDto> getQna(@RequestParam Long qnaId){
+        return ApiResponse.onSuccess(qnaService.getQnaInfo(qnaId));
+    }
+
+    @GetMapping("/previews")
+    public ApiResponse<Page<QnaResponseDTO.QnaPreviewListDTO>> getPreviewList(@RequestParam Long memberId, Pageable pageable){
+        Page<QnaResponseDTO.QnaPreviewListDTO> previews = qnaService.getMyQnaPreviewList(memberId, pageable);
+        return ApiResponse.onSuccess(previews);
+    }
+
 }

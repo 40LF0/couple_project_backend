@@ -41,4 +41,16 @@ public class ReviewController {
         Page<ReviewResponseDTO.PreviewDTO> previews = reviewService.getPreviewList(memberId,pageable);
         return ApiResponse.onSuccess(previews);
     }
+
+    @PutMapping("/{reviewId}/like/enable")
+    public ApiResponse<Boolean> enableReviewLike(@PathVariable Long reviewId, @RequestParam Long memberId){
+        reviewService.enableReviewLike(reviewId, memberId);
+        return ApiResponse.onSuccess(Boolean.TRUE);
+    }
+
+    @PutMapping("/{reviewId}/like/disable")
+    public ApiResponse<Boolean> disableReviewLike(@PathVariable Long reviewId, @RequestParam Long memberId){
+        reviewService.disableReviewLike(reviewId, memberId);
+        return ApiResponse.onSuccess(Boolean.TRUE);
+    }
 }

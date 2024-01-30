@@ -21,5 +21,18 @@ public class ReviewMemberReaction {
     @JoinColumn(name = "memberId")
     private Member member;
 
-    private boolean isLiked = true;
+    private boolean isLiked = false;
+
+    public void enableLike() {
+        if(!isLiked){
+            review.incrementLikeCount();
+        }
+        this.isLiked = true;
+    }
+    public void disableLike(){
+        if(isLiked){
+            review.decrementLikeCount();
+        }
+        this.isLiked = false;
+    }
 }

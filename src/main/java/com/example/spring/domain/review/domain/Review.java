@@ -94,4 +94,12 @@ public class Review extends BaseEntity {
     public void updateBody(String body) {
         this.body = body;
     }
+
+    public void incrementLikeCount() {
+        this.likeCount += 1 ;
+    }
+
+    public void decrementLikeCount() {
+        this.likeCount -= 1 ;
+    }
 }

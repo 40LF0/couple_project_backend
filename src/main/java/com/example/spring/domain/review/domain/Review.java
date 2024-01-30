@@ -26,7 +26,7 @@ public class Review extends BaseEntity {
     private String spot2;
     private String spot3;
 
-    private int heart = 0;
+    private int likeCount = 0;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")

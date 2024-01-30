@@ -37,7 +37,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
                 member,
                 member.getMemberId(),
                 member.getEmail(),
-                member.getPassword(),
+                member.getProviderId(),
                 authorities
         );
     }

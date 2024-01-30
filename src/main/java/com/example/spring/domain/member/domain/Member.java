@@ -27,8 +27,6 @@ public class Member extends BaseEntity {
     private String name;
     private String profileUrl;
 
-    private String password;
-
     private int point = 0;
     private int coupon = 0;
 

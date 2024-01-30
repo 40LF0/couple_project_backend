@@ -3,13 +3,13 @@ package com.example.spring.domain.auth.application;
 import com.example.spring.domain.auth.domain.Token;
 import com.example.spring.domain.auth.domain.repository.TokenRepository;
 import com.example.spring.domain.auth.dto.*;
-import com.example.spring.domain.auth.exception.AlreadyExistEmailException;
 import com.example.spring.domain.member.domain.Member;
 import com.example.spring.domain.member.domain.repository.MemberRepository;
 import com.example.spring.domain.auth.dto.SignInReq;
 import com.example.spring.domain.member.enums.Role;
-import com.example.spring.domain.member.exception.InvalidUserException;
 import com.example.spring.global.DefaultAssert;
+import com.example.spring.global.apiResponse.code.status.ErrorStatus;
+import com.example.spring.global.apiResponse.exception.GeneralException;
 import com.example.spring.global.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,20 +37,14 @@ public class AuthService {
     @Transactional
     public AuthRes signUp(final SignUpReq signUpReq) {
         if (memberRepository.existsByEmail(signUpReq.getEmail()))
-            throw new AlreadyExistEmailException();
-
-        log.info("signUpReq.getProviderId() : {}", signUpReq.getProviderId());
-        log.info("signUpReq.getNickname() : {}", signUpReq.getNickname());
-        log.info("signUpReq.getEmail() : {}", signUpReq.getEmail());
-        log.info("signUpReq.getProfileImgUrl() : {}", signUpReq.getProfileImgUrl());
+            throw new GeneralException(ErrorStatus.ALREADY_EXIST_EMAIL);
 
         Member newUser = Member.builder()
-                .providerId(signUpReq.getProviderId())
-                .provider("kakao")
+                .providerId(passwordEncoder.encode(signUpReq.getProviderId()))
+                .provider(signUpReq.getProvider())
                 .name(signUpReq.getNickname())
                 .email(signUpReq.getEmail())
                 .profileUrl(signUpReq.getProfileImgUrl())
-                .password(passwordEncoder.encode(signUpReq.getProviderId()))
                 .role(Role.USER)
                 .build();
 
@@ -79,9 +73,10 @@ public class AuthService {
     @Transactional
     public AuthRes signIn(final SignInReq signInReq) {
         Member member = memberRepository.findByEmail(signInReq.getEmail())
-                .orElseThrow(InvalidUserException::new);
-        if (!member.getProviderId().equals(signInReq.getProviderId())) {
-            throw new InvalidUserException();
+                .orElseThrow(() -> new GeneralException(ErrorStatus.MEMBER_NOT_FOUND));
+
+        if(!passwordEncoder.matches(signInReq.getProviderId(), member.getProviderId())) {
+            throw new GeneralException(ErrorStatus.INVALID_USER);
         }
 
         Authentication authentication = authenticationManager.authenticate(
@@ -109,12 +104,12 @@ public class AuthService {
     public AuthRes refresh(final RefreshTokenReq tokenRefreshRequest) {
         // 1. Refresh Token 검증
         if (!tokenProvider.validateToken(tokenRefreshRequest.getRefreshToken())) {
-            throw new RuntimeException("Refresh Token 이 유효하지 않습니다.");
+            throw new GeneralException(ErrorStatus.INVALID_REFRESH_TOKEN);
         }
 
         // 2. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
         Token token = tokenRepository.findByRefreshToken(tokenRefreshRequest.getRefreshToken())
-                .orElseThrow(() -> new RuntimeException("Refresh Token 이 유효하지 않습니다."));
+                .orElseThrow(() -> new GeneralException(ErrorStatus.INVALID_REFRESH_TOKEN));
         Authentication authentication = tokenProvider.getAuthenticationByEmail(token.getUserEmail());
 
 

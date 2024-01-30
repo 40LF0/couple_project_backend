@@ -2,6 +2,8 @@ package com.example.spring.domain.auth.application;
 
 import com.example.spring.domain.member.domain.Member;
 import com.example.spring.domain.member.domain.repository.MemberRepository;
+import com.example.spring.global.apiResponse.code.status.ErrorStatus;
+import com.example.spring.global.apiResponse.exception.GeneralException;
 import com.example.spring.global.config.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,7 @@ public class CustomUserDetailService implements UserDetailsService {
         if (member.isPresent()) {
             return UserPrincipal.createUser(member.get());
         }
-        throw new UsernameNotFoundException("유효하지 않는 유저입니다.");
+        throw new GeneralException(ErrorStatus.MEMBER_NOT_FOUND);
     }
 
     public UserDetails loadUserById(Long id) {
@@ -35,7 +37,7 @@ public class CustomUserDetailService implements UserDetailsService {
         if (member.isPresent()) {
             return UserPrincipal.createUser(member.get());
         }
-        throw new UsernameNotFoundException("유효하지 않는 유저입니다.");
+        throw new GeneralException(ErrorStatus.MEMBER_NOT_FOUND);
     }
 
 }

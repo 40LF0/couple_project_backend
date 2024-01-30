@@ -95,7 +95,7 @@ public class SecurityConfig{
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .with(new JwtSecurityConfig(tokenProvider), customizer -> {});
+                .with(new JwtSecurityConfig(tokenProvider), customizer -> {}); // JwtFilter를 addFilterBefore로 등록했던 JwtSecurityConfig 클래스도 적용
         return http.build();
     }
 }

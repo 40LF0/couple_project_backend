@@ -1,24 +1,21 @@
 package com.example.spring.global;
 
-import com.example.spring.domain.member.exception.InvalidUserException;
+import com.example.spring.global.apiResponse.code.status.ErrorStatus;
+import com.example.spring.global.apiResponse.exception.GeneralException;
 import org.springframework.util.Assert;
-import org.springframework.validation.Errors;
 
-import java.security.InvalidParameterException;
-import java.util.List;
-import java.util.Optional;
 
 public class DefaultAssert extends Assert {
 
     public static void isTrue(boolean value){
         if(!value){
-            throw new InvalidUserException();
+            throw new GeneralException(ErrorStatus.INVALID_USER);
         }
     }
 
     public static void isTrue(boolean value, String message){
         if(!value){
-            throw new InvalidUserException();
+            throw new GeneralException(ErrorStatus.INVALID_USER);
         }
     }
 }

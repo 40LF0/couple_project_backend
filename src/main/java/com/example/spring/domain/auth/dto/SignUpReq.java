@@ -20,11 +20,14 @@ public class SignUpReq {
     @NotBlank
     private String profileImgUrl;
 
+    @NotBlank
+    private String provider;
+
     public Member toMember(PasswordEncoder passwordEncoder) {
         return Member.builder()
                 .email(email)
-                .providerId(providerId)
-                .password(passwordEncoder.encode(providerId))
+                .providerId(passwordEncoder.encode(providerId))
+                .provider(provider)
                 .role(Role.USER)
                 .build();
     }

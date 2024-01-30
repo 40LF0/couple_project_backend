@@ -24,14 +24,14 @@ public class ReviewController {
         return ApiResponse.onSuccess(reviewConverter.toReviewEntityDTO(review));
     }
 
-    @GetMapping("")
-    public ApiResponse<ReviewResponseDTO.ReviewEntityDTO> getReview(@RequestParam Long reviewId){
+    @GetMapping("/{reviewId}")
+    public ApiResponse<ReviewResponseDTO.ReviewEntityDTO> getReview(@PathVariable Long reviewId){
         Review review = reviewService.findById(reviewId);
         return ApiResponse.onSuccess(reviewConverter.toReviewEntityDTO(review));
     }
 
-    @PutMapping("")
-    public ApiResponse<ReviewResponseDTO.ReviewEntityDTO> putReview(@RequestBody @Valid ReviewRequestDTO.ReviewDTO request, @RequestParam Long reviewId) {
+    @PutMapping("/{reviewId}")
+    public ApiResponse<ReviewResponseDTO.ReviewEntityDTO> putReview(@RequestBody @Valid ReviewRequestDTO.ReviewDTO request, @PathVariable Long reviewId) {
         Review review = reviewService.updateReview(request, reviewId);
         return ApiResponse.onSuccess(reviewConverter.toReviewEntityDTO(review));
     }

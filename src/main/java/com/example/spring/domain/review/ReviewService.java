@@ -24,9 +24,10 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ReviewImageRepository reviewImageRepository;
     private final MemberService memberService;
+    private final ReviewConverter reviewConverter;
     @Transactional
     public Review createReview(ReviewRequestDTO.ReviewDTO request) {
-        Review review = toReviewEntity(request);
+        Review review = reviewConverter.toReviewEntity(request);
         reviewRepository.save(review);
         return review;
     }
@@ -54,62 +55,18 @@ public class ReviewService {
                 new GeneralException(ErrorStatus.REVIEW_NOT_FOUND));
     }
 
-    public ReviewResponseDTO.ReviewEntityDTO toReviewEntityDTO(Review review) {
-        return ReviewResponseDTO.ReviewEntityDTO
-                .builder()
-                .reviewId(review.getReviewId())
-                .title(review.getTitle())
-                .body(review.getBody())
-                .heart(review.getHeart())
-                .imageUrlList(review.fetchImageUrlList())
-                .spotList(review.fetchSpotList())
-                .createdAt(review.getCreatedAt())
-                .build();
-    }
-
-    private Review toReviewEntity(ReviewRequestDTO.ReviewDTO request) {
-        Member member = memberService.findById(request.getMemberId());
-        Review review = Review.builder()
-                .title(request.getTitle())
-                .body(request.getBody())
-                .member(member)
-                .build();
-        review.updateReviewImages(request.getImageUrlList());
-        review.updateSpots(request.getSpotList());
-        return review;
-    }
 
     public Page<ReviewResponseDTO.PreviewDTO> getPreviewList(Long memberId, Pageable pageable) {
         if(memberId != null){
             return getMyPreviewList(memberId, pageable);
         }
         Page<Review> reviews = reviewRepository.findAll(pageable);
-        return toPreviewListDto(reviews);
+        return reviewConverter.toPreviewListDto(reviews);
     }
 
     private Page<ReviewResponseDTO.PreviewDTO> getMyPreviewList(Long memberId, Pageable pageable) {
         Member member = memberService.findById(memberId);
         Page<Review> reviews = reviewRepository.findAllByMember(member,pageable);
-        return toPreviewListDto(reviews);
-    }
-    private Page<ReviewResponseDTO.PreviewDTO> toPreviewListDto(Page<Review> reviews) {
-        return reviews.map(review -> {
-            // Extract the first image URL or null if the list is empty
-            String imageUrl = review.getReviewImageList().getFirst().getImgUrl();
-
-            // Extract the member ID
-            Long memberId = review.getMember() != null ? review.getMember().getMemberId() : null;
-
-            // Create and return the PreviewDTO
-            return ReviewResponseDTO.PreviewDTO.builder()
-                    .reviewId(review.getReviewId())
-                    .memberId(memberId)
-                    .title(review.getTitle())
-                    .heart(review.getHeart())
-                    .spotList(review.fetchSpotList())
-                    .imageUrl(imageUrl)
-                    .createdAt(review.getCreatedAt())
-                    .build();
-        });
+        return reviewConverter.toPreviewListDto(reviews);
     }
 }

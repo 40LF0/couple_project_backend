@@ -2,23 +2,43 @@ package com.example.spring.domain.review;
 
 import com.example.spring.domain.review.domain.Review;
 import com.example.spring.domain.review.dto.ReviewRequestDTO;
+import com.example.spring.domain.review.dto.ReviewResponseDTO;
 import com.example.spring.global.apiResponse.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.lang.Nullable;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/reviews")
 @RequiredArgsConstructor
 public class ReviewController {
     private final ReviewService reviewService;
+    private final ReviewConverter reviewConverter;
 
-    @PostMapping("/")
-    public ApiResponse<Boolean> join(@RequestBody @Valid ReviewRequestDTO.ReviewSaveDto request){
+    @PostMapping("")
+    public ApiResponse<ReviewResponseDTO.ReviewEntityDTO> postReview(@RequestBody @Valid ReviewRequestDTO.ReviewDTO request){
         Review review = reviewService.createReview(request);
-        return ApiResponse.onSuccess(Boolean.TRUE);
+        return ApiResponse.onSuccess(reviewConverter.toReviewEntityDTO(review));
+    }
+
+    @GetMapping("")
+    public ApiResponse<ReviewResponseDTO.ReviewEntityDTO> getReview(@RequestParam Long reviewId){
+        Review review = reviewService.findById(reviewId);
+        return ApiResponse.onSuccess(reviewConverter.toReviewEntityDTO(review));
+    }
+
+    @PutMapping("")
+    public ApiResponse<ReviewResponseDTO.ReviewEntityDTO> putReview(@RequestBody @Valid ReviewRequestDTO.ReviewDTO request, @RequestParam Long reviewId) {
+        Review review = reviewService.updateReview(request, reviewId);
+        return ApiResponse.onSuccess(reviewConverter.toReviewEntityDTO(review));
+    }
+
+    @GetMapping("/previews")
+    public ApiResponse<Page<ReviewResponseDTO.PreviewDTO>> getPreviewList(@Nullable @RequestParam Long memberId, Pageable pageable){
+        Page<ReviewResponseDTO.PreviewDTO> previews = reviewService.getPreviewList(memberId,pageable);
+        return ApiResponse.onSuccess(previews);
     }
 }

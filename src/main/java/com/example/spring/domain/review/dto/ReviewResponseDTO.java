@@ -23,7 +23,7 @@ public class ReviewResponseDTO {
         Long memberId;
         String title;
         String body;
-        int heart;
+        int likeCount;
         List<String> spotList;
         List<String> imageUrlList;
         LocalDateTime createdAt;
@@ -37,7 +37,7 @@ public class ReviewResponseDTO {
         Long reviewId;
         Long memberId;
         String title;
-        int heart;
+        int likeCount;
         List<String> spotList;
         String imageUrl;
         LocalDateTime createdAt;

@@ -26,7 +26,7 @@ public class Review extends BaseEntity {
     private String spot2;
     private String spot3;
 
-    private int heart = 0;
+    private int likeCount = 0;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")
@@ -93,5 +93,13 @@ public class Review extends BaseEntity {
 
     public void updateBody(String body) {
         this.body = body;
+    }
+
+    public void incrementLikeCount() {
+        this.likeCount += 1 ;
+    }
+
+    public void decrementLikeCount() {
+        this.likeCount -= 1 ;
     }
 }

@@ -3,6 +3,8 @@ package com.example.spring.domain.review;
 import com.example.spring.domain.member.domain.Member;
 import com.example.spring.domain.member.application.MemberService;
 import com.example.spring.domain.review.domain.Review;
+import com.example.spring.domain.review.domain.ReviewMemberReaction;
+import com.example.spring.domain.review.domain.ReviewMemberReactionId;
 import com.example.spring.domain.review.dto.ReviewRequestDTO;
 import com.example.spring.domain.review.dto.ReviewResponseDTO;
 import com.example.spring.global.apiResponse.code.status.ErrorStatus;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 
 @Service
@@ -25,6 +28,7 @@ public class ReviewService {
     private final ReviewImageRepository reviewImageRepository;
     private final MemberService memberService;
     private final ReviewConverter reviewConverter;
+    private final ReviewMemberReactionRepository reviewMemberReactionRepository;
     @Transactional
     public Review createReview(ReviewRequestDTO.ReviewDTO request) {
         Review review = reviewConverter.toReviewEntity(request);
@@ -68,5 +72,35 @@ public class ReviewService {
         Member member = memberService.findById(memberId);
         Page<Review> reviews = reviewRepository.findAllByMember(member,pageable);
         return reviewConverter.toPreviewListDto(reviews);
+    }
+
+    @Transactional
+    public void enableReviewLike(Long reviewId, Long memberId) {
+        Review review = findById(reviewId);
+        Member member = memberService.findById(memberId);
+        ReviewMemberReaction reaction = getReviewMemberReaction(review, member);
+        reaction.enableLike();
+    }
+
+    @Transactional
+    public void disableReviewLike(Long reviewId, Long memberId) {
+        Review review = findById(reviewId);
+        Member member = memberService.findById(memberId);
+        ReviewMemberReaction reaction = getReviewMemberReaction(review, member);
+        reaction.disableLike();
+    }
+
+    private ReviewMemberReaction getReviewMemberReaction(Review review, Member member) {
+        ReviewMemberReactionId reactionId = new ReviewMemberReactionId(review, member);
+        Optional<ReviewMemberReaction> reactionOptional = reviewMemberReactionRepository.findById(reactionId);
+        if (reactionOptional.isPresent()) {
+            return reactionOptional.get();
+        } else {
+            ReviewMemberReaction reaction = ReviewMemberReaction.builder()
+                    .review(reactionId.getReview())
+                    .member(reactionId.getMember())
+                    .build();
+            return reviewMemberReactionRepository.save(reaction);
+        }
     }
 }

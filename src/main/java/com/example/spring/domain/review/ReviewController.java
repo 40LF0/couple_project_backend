@@ -43,14 +43,14 @@ public class ReviewController {
     }
 
     @PutMapping("/{reviewId}/like/enable")
-    public ApiResponse<Boolean> enableReviewLike(@PathVariable Long reviewId, @RequestParam Long memberId){
-        reviewService.enableReviewLike(reviewId, memberId);
+    public ApiResponse<Boolean> enableReviewLike(@PathVariable Long reviewId){
+        reviewService.enableReviewLike(reviewId);
         return ApiResponse.onSuccess(Boolean.TRUE);
     }
 
     @PutMapping("/{reviewId}/like/disable")
-    public ApiResponse<Boolean> disableReviewLike(@PathVariable Long reviewId, @RequestParam Long memberId){
-        reviewService.disableReviewLike(reviewId, memberId);
+    public ApiResponse<Boolean> disableReviewLike(@PathVariable Long reviewId){
+        reviewService.disableReviewLike(reviewId);
         return ApiResponse.onSuccess(Boolean.TRUE);
     }
 }

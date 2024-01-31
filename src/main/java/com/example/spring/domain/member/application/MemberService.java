@@ -1,6 +1,7 @@
-package com.example.spring.domain.member;
+package com.example.spring.domain.member.application;
 
 import com.example.spring.domain.member.domain.Member;
+import com.example.spring.domain.member.domain.repository.MemberRepository;
 import com.example.spring.global.apiResponse.code.status.ErrorStatus;
 import com.example.spring.global.apiResponse.exception.GeneralException;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,11 @@ public class MemberService {
 
     public Member findById(Long memberId){
         return memberRepository.findById(memberId).orElseThrow(() ->
+                new GeneralException(ErrorStatus.MEMBER_NOT_FOUND));
+    }
+
+    public Member findByEmail(String email){
+        return memberRepository.findByEmail(email).orElseThrow(() ->
                 new GeneralException(ErrorStatus.MEMBER_NOT_FOUND));
     }
 

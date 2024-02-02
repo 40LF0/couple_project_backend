@@ -3,9 +3,9 @@ package com.example.spring.domain.member.application;
 import com.example.spring.domain.member.domain.Member;
 import com.example.spring.domain.member.domain.repository.MemberRepository;
 import com.example.spring.domain.member.dto.MemberDetailRes;
+import com.example.spring.domain.member.dto.UpdateMemberDetailReq;
 import com.example.spring.global.apiResponse.code.status.ErrorStatus;
 import com.example.spring.global.apiResponse.exception.GeneralException;
-import com.example.spring.global.config.security.UserPrincipal;
 import com.example.spring.global.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,6 +29,14 @@ public class MemberService {
 
     public MemberDetailRes getCurrentUser(){
         Member member = findByEmail(SecurityUtil.getCurrentMemberId());
+        return MemberDetailRes.toDto(member);
+    }
+
+    @Transactional
+    public MemberDetailRes updateMemberDetail(UpdateMemberDetailReq request){
+        Member member = findByEmail(SecurityUtil.getCurrentMemberId());
+        member.updateName(request.getName());
+        member.updateProfileImage(request.getProfileUrl());
         return MemberDetailRes.toDto(member);
     }
 

@@ -2,7 +2,8 @@ package com.example.spring.domain.qna.domain;
 
 import com.example.spring.domain.member.domain.Member;
 import com.example.spring.global.baseEntity.BaseEntity;
-import com.example.spring.domain.member.enums.AnswerStatus;
+import com.example.spring.domain.qna.enums.AnswerStatus;
+//import com.example.spring.domain.member.enums.AnswerStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,9 +19,10 @@ public class Qna extends BaseEntity{
 
     private String title;
     private String body;
+    private String answer;
 
     @Enumerated(EnumType.STRING)
-    private AnswerStatus answerStatus = AnswerStatus.WAITING;
+    private AnswerStatus answerStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")

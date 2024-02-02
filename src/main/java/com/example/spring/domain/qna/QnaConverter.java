@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static com.example.spring.domain.qna.enums.AnswerStatus.WAITING;
 
 @Component
@@ -22,32 +25,38 @@ public class QnaConverter {
                 .member(member)
                 .title(request.getTitle())
                 .body(request.getBody())
+                .answerStatus(request.getAnswerStatus())
                 .build();
     }
 
     public QnaResponseDTO.QnaEntityDto toQnaEntityDto(Qna qna){
-        // 답변 받으면 바뀌는 로직 필요
-        AnswerStatus answerStatus = WAITING;
         return QnaResponseDTO.QnaEntityDto.builder()
                 .qnaId(qna.getQnaId())
                 .memberId(qna.getMember().getMemberId())
                 .title(qna.getTitle())
                 .body(qna.getBody())
-                .answerStatus(answerStatus)
+                .answerStatus(qna.getAnswerStatus())
                 .build();
     }
 
     public Page<QnaResponseDTO.QnaPreviewListDTO> toMyQnaPreviewListDto(Page<Qna> qnas) {
-        // 운영자가 답변 완료할 시 바뀌는 로직 필요
-        AnswerStatus answerStatus = WAITING;
+
 
         return qnas.map(qna -> {
             return QnaResponseDTO.QnaPreviewListDTO.builder()
                     .qnaId(qna.getQnaId())
                     .title(qna.getTitle())
-                    .answerStatus(answerStatus)
+                    .answerStatus(qna.getAnswerStatus())
                     .build();
         });
+    }
+
+    public Page<QnaResponseDTO.QnaAdminListDTO> toQnaAdminListDto(Page<Qna> qnas){
+        return qnas.map(qna -> QnaResponseDTO.QnaAdminListDTO.builder()
+                        .qnaId(qna.getQnaId())
+                        .title(qna.getTitle())
+                        .body(qna.getBody())
+                        .build());
     }
 
 }

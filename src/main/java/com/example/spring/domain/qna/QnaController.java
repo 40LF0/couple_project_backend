@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -33,6 +35,12 @@ public class QnaController {
     public ApiResponse<Page<QnaResponseDTO.QnaPreviewListDTO>> getPreviewList(@RequestParam Long memberId, Pageable pageable){
         Page<QnaResponseDTO.QnaPreviewListDTO> previews = qnaService.getMyQnaPreviewList(memberId, pageable);
         return ApiResponse.onSuccess(previews);
+    }
+
+    @GetMapping("/admin")
+    public ApiResponse<Page<QnaResponseDTO.QnaAdminListDTO>> getQnaAdminList(@RequestParam Pageable pageable){
+        Page<QnaResponseDTO.QnaAdminListDTO> qnaLists = qnaService.getQnaWaitingList(pageable);
+        return ApiResponse.onSuccess(qnaLists);
     }
 
 }

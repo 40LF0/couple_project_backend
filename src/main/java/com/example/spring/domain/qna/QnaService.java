@@ -5,6 +5,7 @@ import com.example.spring.domain.member.domain.Member;
 import com.example.spring.domain.qna.domain.Qna;
 import com.example.spring.domain.qna.dto.QnaRequestDTO;
 import com.example.spring.domain.qna.dto.QnaResponseDTO;
+import com.example.spring.domain.qna.enums.AnswerStatus;
 import com.example.spring.global.apiResponse.code.status.ErrorStatus;
 import com.example.spring.global.apiResponse.exception.GeneralException;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 @Service
@@ -42,6 +45,13 @@ public class QnaService {
         Page <Qna> qnas = qnaRepository.findAllByMember(member, pageable);
         return qnaConverter.toMyQnaPreviewListDto(qnas);
     }
+
+    public Page<QnaResponseDTO.QnaAdminListDTO> getQnaWaitingList(Pageable pageable) {
+        Page <Qna> qnas = qnaRepository.findAllByAnswerStatus(AnswerStatus.WAITING, pageable);
+        return qnaConverter.toQnaAdminListDto(qnas);
+    }
+
+
 
 
 }

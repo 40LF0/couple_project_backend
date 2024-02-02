@@ -6,7 +6,7 @@ import com.example.spring.domain.auth.dto.RefreshTokenReq;
 import com.example.spring.domain.auth.dto.SignUpReq;
 import com.example.spring.domain.auth.dto.SignInReq;
 import com.example.spring.global.apiResponse.ApiResponse;
-import com.example.spring.global.payload.ResponseCustom;
+import com.example.spring.global.apiResponse.Message;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,10 +39,9 @@ public class AuthController {
         return ApiResponse.onSuccess(authService.refresh(refreshTokenReq));
     }
 
-
-//    @PostMapping(value="/sign-out")
-//    public ResponseCustom<Message> signOut(@Valid @RequestBody RefreshTokenReq tokenRefreshRequest
-//    ) {
-//        return ResponseCustom.OK(authService.signOut(tokenRefreshRequest));
-//    }
+    @PostMapping(value="/sign-out")
+    public ApiResponse<Message> signOut(@Valid @RequestBody RefreshTokenReq tokenRefreshRequest
+    ) {
+        return ApiResponse.onSuccess(authService.signOut(tokenRefreshRequest));
+    }
 }

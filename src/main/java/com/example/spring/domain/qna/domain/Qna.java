@@ -21,8 +21,9 @@ public class Qna extends BaseEntity{
     private String body;
     private String answer;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
-    private AnswerStatus answerStatus;
+    private AnswerStatus answerStatus = AnswerStatus.WAITING;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")

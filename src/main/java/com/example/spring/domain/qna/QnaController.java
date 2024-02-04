@@ -38,7 +38,7 @@ public class QnaController {
     }
 
     @GetMapping("/admin")
-    public ApiResponse<Page<QnaResponseDTO.QnaAdminListDTO>> getQnaAdminList(@RequestParam Pageable pageable){
+    public ApiResponse<Page<QnaResponseDTO.QnaAdminListDTO>> getQnaAdminList(Pageable pageable){
         Page<QnaResponseDTO.QnaAdminListDTO> qnaLists = qnaService.getQnaWaitingList(pageable);
         return ApiResponse.onSuccess(qnaLists);
     }

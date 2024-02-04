@@ -14,8 +14,6 @@ public class QnaRequestDTO {
         String title;
         @NotBlank
         String body;
-
-        AnswerStatus answerStatus = AnswerStatus.WAITING;
     }
 
 

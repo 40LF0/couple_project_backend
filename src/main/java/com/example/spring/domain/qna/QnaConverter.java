@@ -25,7 +25,6 @@ public class QnaConverter {
                 .member(member)
                 .title(request.getTitle())
                 .body(request.getBody())
-                .answerStatus(request.getAnswerStatus())
                 .build();
     }
 
@@ -35,13 +34,10 @@ public class QnaConverter {
                 .memberId(qna.getMember().getMemberId())
                 .title(qna.getTitle())
                 .body(qna.getBody())
-                .answerStatus(qna.getAnswerStatus())
                 .build();
     }
 
     public Page<QnaResponseDTO.QnaPreviewListDTO> toMyQnaPreviewListDto(Page<Qna> qnas) {
-
-
         return qnas.map(qna -> {
             return QnaResponseDTO.QnaPreviewListDTO.builder()
                     .qnaId(qna.getQnaId())

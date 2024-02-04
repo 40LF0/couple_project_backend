@@ -4,15 +4,11 @@ import com.example.spring.domain.member.domain.Member;
 import com.example.spring.domain.qna.domain.Qna;
 import com.example.spring.domain.qna.dto.QnaRequestDTO;
 import com.example.spring.domain.qna.dto.QnaResponseDTO;
-import com.example.spring.domain.qna.enums.AnswerStatus;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.example.spring.domain.qna.enums.AnswerStatus.WAITING;
 
 @Component
 @RequiredArgsConstructor

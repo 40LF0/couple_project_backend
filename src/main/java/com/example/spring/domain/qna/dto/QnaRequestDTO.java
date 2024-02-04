@@ -1,6 +1,5 @@
 package com.example.spring.domain.qna.dto;
 
-import com.example.spring.domain.qna.enums.AnswerStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;

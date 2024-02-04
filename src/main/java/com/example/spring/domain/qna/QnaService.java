@@ -51,7 +51,12 @@ public class QnaService {
         return qnaConverter.toQnaAdminListDto(qnas);
     }
 
-
+    public Qna createQnaAnswer(QnaRequestDTO.QnaAnswerDto request, Long qnaId) {
+        Qna qna = findById(qnaId);
+        qna.updateAnswer(request.getAnswer());
+        qna.updateAnswerStatus();
+        return qna;
+    }
 
 
 }

@@ -16,5 +16,11 @@ public class QnaRequestDTO {
         String body;
     }
 
+    @Getter
+    public static class QnaAnswerDto {
+        Long qnaId;
+        String answer;
+    }
+
 
 }

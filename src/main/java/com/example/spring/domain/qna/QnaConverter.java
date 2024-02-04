@@ -34,6 +34,7 @@ public class QnaConverter {
                 .memberId(qna.getMember().getMemberId())
                 .title(qna.getTitle())
                 .body(qna.getBody())
+                .answer(qna.getAnswer())
                 .build();
     }
 

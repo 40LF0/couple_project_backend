@@ -25,9 +25,12 @@ public class Member extends BaseEntity {
     private Long memberId;
 
     private String name;
+
     private String profileUrl;
 
+    @Builder.Default
     private int point = 0;
+    @Builder.Default
     private int coupon = 0;
 
     @Enumerated(EnumType.STRING)
@@ -42,8 +45,9 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status status = Status.ACTIVE;
 
     private LocalDate inactiveDate;
 

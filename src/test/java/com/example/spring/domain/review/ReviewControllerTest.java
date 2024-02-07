@@ -1,6 +1,6 @@
 package com.example.spring.domain.review;
 
-import com.example.spring.domain.member.MemberService;
+import com.example.spring.domain.member.application.MemberService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class ReviewControllerTest {
                         "\"spotList\": [\"한강\"], " +
                         "\"imageUrlList\": [\"url1\"]}", memberId);
 
-        mockMvc.perform(post("/reviews/")
+        mockMvc.perform(post("/reviews")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(reviewJson))
                 .andExpect(status().isOk());
@@ -45,7 +45,7 @@ public class ReviewControllerTest {
     public void testCreateReviewWithEmptyData() throws Exception {
         String reviewJson = "{}";
 
-        mockMvc.perform(post("/reviews/")
+        mockMvc.perform(post("/reviews")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(reviewJson))
                 .andExpect(status().isBadRequest());
@@ -58,7 +58,7 @@ public class ReviewControllerTest {
                         "\"spotList\": [\"한강\"], " +
                         "\"imageUrlList\": [\"url1\"]}");
 
-        mockMvc.perform(post("/reviews/")
+        mockMvc.perform(post("/reviews")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(reviewJson))
                 .andExpect(status().isBadRequest());
@@ -71,7 +71,7 @@ public class ReviewControllerTest {
                         "\"spotList\": [\"한강\"], " +
                         "\"imageUrlList\": [\"url1\"]}", memberId);
 
-        mockMvc.perform(post("/reviews/")
+        mockMvc.perform(post("/reviews")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(reviewJson))
                 .andExpect(status().isBadRequest());
@@ -84,7 +84,7 @@ public class ReviewControllerTest {
                         "\"spotList\": [\"한강\"], " +
                         "\"imageUrlList\": [\"url1\"]}", memberId);
 
-        mockMvc.perform(post("/reviews/")
+        mockMvc.perform(post("/reviews")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(reviewJson))
                 .andExpect(status().isBadRequest());
@@ -95,7 +95,7 @@ public class ReviewControllerTest {
                 "{\"memberId\": %d, \"title\": \"정상 리뷰1\", \"body\": \"글 1\", " +
                         "\"imageUrlList\": [\"url1\"]}", memberId);
 
-        mockMvc.perform(post("/reviews/")
+        mockMvc.perform(post("/reviews")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(reviewJson))
                 .andExpect(status().isBadRequest());
@@ -108,7 +108,7 @@ public class ReviewControllerTest {
                         "\"spotList\": [], " +
                         "\"imageUrlList\": [\"url1\"]}", memberId);
 
-        mockMvc.perform(post("/reviews/")
+        mockMvc.perform(post("/reviews")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(reviewJson))
                 .andExpect(status().isBadRequest());
@@ -120,7 +120,7 @@ public class ReviewControllerTest {
                         "\"spotList\": [\"spot1\",\"spot2\",\"spot3\"], " +
                         "\"imageUrlList\": [\"url1\"]}", memberId);
 
-        mockMvc.perform(post("/reviews/")
+        mockMvc.perform(post("/reviews")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(reviewJson))
                 .andExpect(status().isOk());
@@ -132,7 +132,7 @@ public class ReviewControllerTest {
                         "\"spotList\": [\"spot1\",\"spot2\",\"spot3\",\"spot4\"], " +
                         "\"imageUrlList\": [\"url1\"]}", memberId);
 
-        mockMvc.perform(post("/reviews/")
+        mockMvc.perform(post("/reviews")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(reviewJson))
                 .andExpect(status().isBadRequest());
@@ -144,7 +144,7 @@ public class ReviewControllerTest {
                         "\"spotList\": [\"spot1\",\"spot2\",\"spot3\",\"spot3\"], " +
                         "\"imageUrlList\": [\"url1\"]}", memberId);
 
-        mockMvc.perform(post("/reviews/")
+        mockMvc.perform(post("/reviews")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(reviewJson))
                 .andExpect(status().isOk());
@@ -155,7 +155,7 @@ public class ReviewControllerTest {
                 "{\"memberId\": %d, \"title\": \"정상 리뷰1\", \"body\": \"글 1\", " +
                         "\"spotList\": [\"한강\"], ", memberId);
 
-        mockMvc.perform(post("/reviews/")
+        mockMvc.perform(post("/reviews")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(reviewJson))
                 .andExpect(status().isBadRequest());
@@ -168,7 +168,7 @@ public class ReviewControllerTest {
                         "\"spotList\": [\"한강\"], " +
                         "\"imageUrlList\": []}", memberId);
 
-        mockMvc.perform(post("/reviews/")
+        mockMvc.perform(post("/reviews")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(reviewJson))
                 .andExpect(status().isBadRequest());
@@ -181,7 +181,7 @@ public class ReviewControllerTest {
                         "\"spotList\": [\"한강\"], " +
                         "\"imageUrlList\": [\"url1\",\"url2\",\"url3\",\"url4\",\"url5\"]}", memberId);
 
-        mockMvc.perform(post("/reviews/")
+        mockMvc.perform(post("/reviews")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(reviewJson))
                 .andExpect(status().isOk());
@@ -194,7 +194,7 @@ public class ReviewControllerTest {
                         "\"spotList\": [\"한강\"], " +
                         "\"imageUrlList\": [\"url1\",\"url2\",\"url3\",\"url4\",\"url5\",\"url6\"]}", memberId);
 
-        mockMvc.perform(post("/reviews/")
+        mockMvc.perform(post("/reviews")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(reviewJson))
                 .andExpect(status().isBadRequest());
@@ -207,7 +207,7 @@ public class ReviewControllerTest {
                         "\"spotList\": [\"한강\"], " +
                         "\"imageUrlList\": [\"url1\",\"url2\",\"url3\",\"url4\",\"url5\",\"url5\"]}", memberId);
 
-        mockMvc.perform(post("/reviews/")
+        mockMvc.perform(post("/reviews")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(reviewJson))
                 .andExpect(status().isOk());

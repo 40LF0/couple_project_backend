@@ -9,6 +9,7 @@ import com.example.spring.domain.review.dto.ReviewRequestDTO;
 import com.example.spring.domain.review.dto.ReviewResponseDTO;
 import com.example.spring.global.apiResponse.code.status.ErrorStatus;
 import com.example.spring.global.apiResponse.exception.GeneralException;
+import com.example.spring.global.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +40,8 @@ public class ReviewService {
     @Transactional
     public Review updateReview(ReviewRequestDTO.ReviewDTO request, Long reviewId) {
         Review review = findById(reviewId);
-        if (!Objects.equals(review.getMember().getMemberId(), request.getMemberId())){
+        Member member = memberService.findByEmail(SecurityUtil.getCurrentMemberId());
+        if (!Objects.equals(review.getMember().getMemberId(), member.getMemberId())){
             throw new GeneralException(ErrorStatus.REVIEW_NOT_FOUND);
         }
         review.updateTitle(request.getTitle());
@@ -75,17 +77,17 @@ public class ReviewService {
     }
 
     @Transactional
-    public void enableReviewLike(Long reviewId, Long memberId) {
+    public void enableReviewLike(Long reviewId) {
         Review review = findById(reviewId);
-        Member member = memberService.findById(memberId);
+        Member member = memberService.findByEmail(SecurityUtil.getCurrentMemberId());
         ReviewMemberReaction reaction = getReviewMemberReaction(review, member);
         reaction.enableLike();
     }
 
     @Transactional
-    public void disableReviewLike(Long reviewId, Long memberId) {
+    public void disableReviewLike(Long reviewId) {
         Review review = findById(reviewId);
-        Member member = memberService.findById(memberId);
+        Member member = memberService.findByEmail(SecurityUtil.getCurrentMemberId());
         ReviewMemberReaction reaction = getReviewMemberReaction(review, member);
         reaction.disableLike();
     }

@@ -1,11 +1,11 @@
 package com.example.spring.domain.review;
 
-
 import com.example.spring.domain.member.application.MemberService;
 import com.example.spring.domain.member.domain.Member;
 import com.example.spring.domain.review.domain.Review;
 import com.example.spring.domain.review.dto.ReviewRequestDTO;
 import com.example.spring.domain.review.dto.ReviewResponseDTO;
+import com.example.spring.global.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -28,7 +28,7 @@ public class ReviewConverter {
     }
 
     public Review toReviewEntity(ReviewRequestDTO.ReviewDTO request) {
-        Member member = memberService.findById(request.getMemberId());
+        Member member = memberService.findByEmail(SecurityUtil.getCurrentMemberId());
         Review review = Review.builder()
                 .title(request.getTitle())
                 .body(request.getBody())

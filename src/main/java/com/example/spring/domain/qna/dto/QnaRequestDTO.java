@@ -7,8 +7,6 @@ import lombok.*;
 public class QnaRequestDTO {
     @Getter
     public static class QnaSaveDto {
-        @NotNull
-        Long memberId;
         @NotBlank
         String title;
         @NotBlank

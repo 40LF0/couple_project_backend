@@ -5,6 +5,7 @@ import com.example.spring.domain.qna.domain.Qna;
 import com.example.spring.domain.qna.dto.QnaRequestDTO;
 import com.example.spring.domain.qna.dto.QnaResponseDTO;
 
+import com.example.spring.global.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ public class QnaConverter {
     private final MemberService memberService;
 
     public Qna toQnaEntity(QnaRequestDTO.QnaSaveDto request){
-        Member member = memberService.findById(request.getMemberId());
+        Member member = memberService.findByEmail(SecurityUtil.getCurrentMemberId());
         return Qna.builder()
                 .member(member)
                 .title(request.getTitle())
@@ -27,7 +28,6 @@ public class QnaConverter {
     public QnaResponseDTO.QnaEntityDto toQnaEntityDto(Qna qna){
         return QnaResponseDTO.QnaEntityDto.builder()
                 .qnaId(qna.getQnaId())
-                .memberId(qna.getMember().getMemberId())
                 .title(qna.getTitle())
                 .body(qna.getBody())
                 .answer(qna.getAnswer())

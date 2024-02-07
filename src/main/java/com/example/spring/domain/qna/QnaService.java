@@ -8,11 +8,14 @@ import com.example.spring.domain.qna.dto.QnaResponseDTO;
 import com.example.spring.domain.qna.enums.AnswerStatus;
 import com.example.spring.global.apiResponse.code.status.ErrorStatus;
 import com.example.spring.global.apiResponse.exception.GeneralException;
+import com.example.spring.global.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Objects;
 
 
 @Service
@@ -31,6 +34,10 @@ public class QnaService {
 
     public QnaResponseDTO.QnaEntityDto getQnaInfo(Long qnaId) {
         Qna qna = findById(qnaId);
+        Member securityMember = memberService.findByEmail(SecurityUtil.getCurrentMemberId());
+        if(!Objects.equals(qna.getMember().getMemberId(), securityMember.getMemberId())){
+            throw new GeneralException(ErrorStatus.QNA_NOT_FOUND);
+        }
         return qnaConverter.toQnaEntityDto(qna);
     }
 
@@ -38,8 +45,8 @@ public class QnaService {
         return qnaRepository.findById(qnaId).orElseThrow(()->new GeneralException(ErrorStatus.QNA_NOT_FOUND));
     }
 
-    public Page<QnaResponseDTO.QnaPreviewListDTO> getMyQnaPreviewList(Long memberId, Pageable pageable){
-        Member member = memberService.findById(memberId);
+    public Page<QnaResponseDTO.QnaPreviewListDTO> getMyQnaPreviewList(Pageable pageable){
+        Member member = memberService.findByEmail(SecurityUtil.getCurrentMemberId());
         Page <Qna> qnas = qnaRepository.findAllByMember(member, pageable);
         return qnaConverter.toMyQnaPreviewListDto(qnas);
     }
@@ -49,6 +56,7 @@ public class QnaService {
         return qnaConverter.toQnaAdminListDto(qnas);
     }
 
+    @Transactional
     public Qna createQnaAnswer(QnaRequestDTO.QnaAnswerDto request, Long qnaId) {
         Qna qna = findById(qnaId);
         qna.updateAnswer(request.getAnswer());

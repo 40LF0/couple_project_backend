@@ -15,7 +15,6 @@ public class QnaResponseDTO {
     @AllArgsConstructor
     public static class QnaEntityDto {
         Long qnaId;
-        Long memberId;
         String title;
         String body;
         String answer;

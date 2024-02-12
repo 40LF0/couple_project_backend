@@ -6,6 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Getter
 @AllArgsConstructor
 public enum SpotArea {
@@ -20,5 +24,8 @@ public enum SpotArea {
             }
         }
         throw new GeneralException(ErrorStatus.REGION_NOT_FOUND);
+    }
+    public static List<SpotArea> getAll() {
+        return Arrays.stream(values()).collect(Collectors.toList());
     }
 }

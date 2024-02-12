@@ -5,6 +5,10 @@ import com.example.spring.global.apiResponse.exception.GeneralException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Getter
 @AllArgsConstructor
 public enum SpotType {
@@ -20,5 +24,8 @@ public enum SpotType {
             }
         }
         throw new GeneralException(ErrorStatus.CATEGORY_NOT_FOUND);
+    }
+    public static List<SpotType> getAll() {
+        return Arrays.stream(values()).collect(Collectors.toList());
     }
 }

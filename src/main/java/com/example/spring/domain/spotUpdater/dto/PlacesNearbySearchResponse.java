@@ -21,9 +21,8 @@ public class PlacesNearbySearchResponse {
         private String name;
         private String place_id;
         private Geometry geometry;
-        private String formatted_address;
+        private String vicinity;
         private Double rating;
-        private Integer user_ratings_total;
 
     }
     @Getter

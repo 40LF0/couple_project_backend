@@ -29,9 +29,9 @@ public class QnaController {
         return ApiResponse.onSuccess(qnaService.getQnaInfo(qnaId));
     }
 
-    @GetMapping("/previews")
-    public ApiResponse<Page<QnaResponseDTO.QnaPreviewListDTO>> getPreviewList(Pageable pageable){
-        Page<QnaResponseDTO.QnaPreviewListDTO> previews = qnaService.getMyQnaPreviewList(pageable);
+    @GetMapping("/{memberId}/previews")
+    public ApiResponse<Page<QnaResponseDTO.QnaPreviewListDTO>> getPreviewList(@PathVariable Long memberId, Pageable pageable){
+        Page<QnaResponseDTO.QnaPreviewListDTO> previews = qnaService.getMyQnaPreviewList(memberId, pageable);
         return ApiResponse.onSuccess(previews);
     }
 

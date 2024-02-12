@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 public class SpotUpdaterController {
     private final SpotUpdaterService spotUpdaterService;
     @PutMapping()
-    public ApiResponse<Boolean> putReview(@NotBlank @RequestParam String location,@NotBlank @RequestParam String type) {
-        spotUpdaterService.updateSpot(location, type);
+    public ApiResponse<Boolean> updateSpot(@NotBlank @RequestParam String location,@NotBlank @RequestParam String keyword) {
+        spotUpdaterService.updateSpot(location, keyword);
         return ApiResponse.onSuccess(Boolean.TRUE);
     }
 }

@@ -1,6 +1,10 @@
 package com.example.spring.domain.spotUpdater;
 
 import com.example.spring.domain.spotUpdater.dto.PlacesNearbySearchResponse;
+import com.example.spring.domain.spotUpdater.enums.SpotArea;
+import com.example.spring.domain.spotUpdater.enums.SpotType;
+import com.example.spring.global.apiResponse.code.status.ErrorStatus;
+import com.example.spring.global.apiResponse.exception.GeneralException;
 import com.example.spring.global.utils.UtilsFunctions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,24 +24,28 @@ public class SpotUpdaterService {
     private final int RADIUS = 1500;
     @Transactional
     public void updateSpot(String location, String keyword) {
-        String url = buildUpdateSpotUrl(location, keyword);
-        // ResponseEntity를 PlacesSearchResponse DTO로 변경
-        ResponseEntity<PlacesNearbySearchResponse> response = restTemplate.getForEntity(url, PlacesNearbySearchResponse.class);
-        PlacesNearbySearchResponse placesSearchResponse = response.getBody();
-        String pageToken = placesSearchResponse.getNext_page_token();
-        System.out.println("Next Page Token: " + placesSearchResponse.getNext_page_token());
-        placesSearchResponse.getResults().forEach(place -> System.out.println("Place Name: " + place.getName()));
+        SpotArea spotArea = SpotArea.findByKey(location);
+        SpotType spotType = SpotType.findByKey(keyword);
 
-        while (pageToken != null) {
-            UtilsFunctions.wait(5);
-            url = buildUpdateSpotUrlWithNextToken(pageToken);
+        String url = buildUpdateSpotUrl(spotArea.getLocationValue(), spotType.getKey());
+        ResponseEntity<PlacesNearbySearchResponse> response = restTemplate.getForEntity(url, PlacesNearbySearchResponse.class);
+        updateSpotInfo(response.getBody(), spotArea, spotType);
+
+        // Check if there is a next page of results (Google Places API can paginate results).
+        while (response.getBody().getNext_page_token() != null) {
+            // Wait for a short period before making another request to avoid hitting Google Places API rate limits.
+            // This is necessary because making requests too frequently can lead to access errors.
+            UtilsFunctions.wait(5); // Wait for 5 seconds
+            url = buildUpdateSpotUrlWithNextToken(response.getBody().getNext_page_token());
             response = restTemplate.getForEntity(url, PlacesNearbySearchResponse.class);
-            placesSearchResponse = response.getBody();
-            pageToken = placesSearchResponse.getNext_page_token();
-            System.out.println("Next Page Token: " + placesSearchResponse.getNext_page_token());
-            placesSearchResponse.getResults().forEach(place -> System.out.println("Place Name: " + place.getName()));
+            updateSpotInfo(response.getBody(), spotArea, spotType);
         }
-        System.out.println("END");
+    }
+
+    private void updateSpotInfo(PlacesNearbySearchResponse response, SpotArea spotArea, SpotType spotType) {
+        String pageToken = response.getNext_page_token();
+        System.out.println("Next Page Token: " + response.getNext_page_token());
+        response.getResults().forEach(place -> System.out.println("Place Name: " + place.getName()));
     }
 
     private String buildUpdateSpotUrl(String location, String keyword) {

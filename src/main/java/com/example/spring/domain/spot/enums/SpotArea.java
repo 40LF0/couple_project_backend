@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 @Getter
 @AllArgsConstructor
 public enum SpotArea {
+    성수동("성수동","37.541579,127.056572"),
     이태원("이태원","37.534664,126.994307");
     private final String key;
     private final String locationValue;

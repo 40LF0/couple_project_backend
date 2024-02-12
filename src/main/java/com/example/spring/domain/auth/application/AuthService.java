@@ -8,6 +8,7 @@ import com.example.spring.domain.member.domain.repository.MemberRepository;
 import com.example.spring.domain.auth.dto.SignInReq;
 import com.example.spring.domain.member.enums.Role;
 import com.example.spring.global.DefaultAssert;
+import com.example.spring.global.apiResponse.Message;
 import com.example.spring.global.apiResponse.code.status.ErrorStatus;
 import com.example.spring.global.apiResponse.exception.GeneralException;
 import com.example.spring.global.jwt.TokenProvider;
@@ -132,16 +133,16 @@ public class AuthService {
         return authResponse;
     }
 
-//    @Transactional
-//    public Message signOut(final RefreshTokenReq tokenRefreshRequest) {
-//        Token token = tokenRepository.findByRefreshToken(tokenRefreshRequest.getRefreshToken())
-//                .orElseThrow(() -> new DefaultAuthenticationException(ErrorCode.INVALID_AUTHENTICATION));
-//        tokenRepository.delete(token);
-//
-//        return Message.builder()
-//                .message("로그아웃 하였습니다.")
-//                .build();
-//    }
+    @Transactional
+    public Message signOut(final RefreshTokenReq tokenRefreshRequest) {
+        Token token = tokenRepository.findByRefreshToken(tokenRefreshRequest.getRefreshToken())
+                .orElseThrow(() -> new GeneralException(ErrorStatus._BAD_REQUEST));
+        tokenRepository.delete(token);
+
+        return Message.builder()
+                .message("로그아웃 하였습니다.")
+                .build();
+    }
 
     private boolean valid(final String refreshToken) {
         //1. 토큰 형식 물리적 검증

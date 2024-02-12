@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.naming.ldap.ManageReferralControl;
 import java.util.Objects;
 
 
@@ -52,13 +53,25 @@ public class QnaService {
     }
 
     public Page<QnaResponseDTO.QnaAdminListDTO> getQnaWaitingList(Pageable pageable) {
+        Member securityMember = memberService.findByEmail(SecurityUtil.getCurrentMemberId());
+
+        if (!Objects.equals(securityMember.getRole(),"MANAGER")){
+            throw new GeneralException(ErrorStatus._FORBIDDEN);
+        }
+
         Page <Qna> qnas = qnaRepository.findAllByAnswerStatus(AnswerStatus.WAITING, pageable);
         return qnaConverter.toQnaAdminListDto(qnas);
     }
 
     @Transactional
-    public Qna createQnaAnswer(QnaRequestDTO.QnaAnswerDto request, Long qnaId) {
-        Qna qna = findById(qnaId);
+    public Qna createQnaAnswer(QnaRequestDTO.QnaAnswerDto request) {
+
+        Member securityMember = memberService.findByEmail(SecurityUtil.getCurrentMemberId());
+        if(!Objects.equals(securityMember.getRole(),"MANAGER")){
+            throw new GeneralException(ErrorStatus._FORBIDDEN);
+        }
+
+        Qna qna = findById(request.getQnaId());
         qna.updateAnswer(request.getAnswer());
         qna.updateAnswerStatus();
         return qna;

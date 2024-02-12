@@ -24,8 +24,8 @@ public class QnaController {
         return ApiResponse.onSuccess(qnaDTO);
     }
 
-    @GetMapping("")
-    public ApiResponse<QnaResponseDTO.QnaEntityDto> getQna(@RequestParam Long qnaId){
+    @GetMapping("/{qnaId}")
+    public ApiResponse<QnaResponseDTO.QnaEntityDto> getQna(@PathVariable Long qnaId){
         return ApiResponse.onSuccess(qnaService.getQnaInfo(qnaId));
     }
 
@@ -35,15 +35,15 @@ public class QnaController {
         return ApiResponse.onSuccess(previews);
     }
 
-    @GetMapping("/admin")
+    @GetMapping("")
     public ApiResponse<Page<QnaResponseDTO.QnaAdminListDTO>> getQnaAdminList(Pageable pageable){
         Page<QnaResponseDTO.QnaAdminListDTO> qnaLists = qnaService.getQnaWaitingList(pageable);
         return ApiResponse.onSuccess(qnaLists);
     }
 
-    @PutMapping("/admin")
-    public ApiResponse<QnaResponseDTO.QnaEntityDto> putQnaAnswer(@RequestBody @Valid QnaRequestDTO.QnaAnswerDto request, @RequestParam Long qnaId) {
-        Qna qna = qnaService.createQnaAnswer(request, qnaId);
+    @PutMapping("")
+    public ApiResponse<QnaResponseDTO.QnaEntityDto> putQnaAnswer(@RequestBody @Valid QnaRequestDTO.QnaAnswerDto request) {
+        Qna qna = qnaService.createQnaAnswer(request);
         return ApiResponse.onSuccess(qnaConverter.toQnaEntityDto(qna));
     }
 

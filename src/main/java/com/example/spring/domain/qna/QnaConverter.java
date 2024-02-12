@@ -3,8 +3,8 @@ import com.example.spring.domain.member.application.MemberService;
 import com.example.spring.domain.member.domain.Member;
 import com.example.spring.domain.qna.domain.Qna;
 import com.example.spring.domain.qna.dto.QnaRequestDTO;
-import com.example.spring.domain.qna.dto.QnaResponseDTO;
 
+import com.example.spring.domain.qna.dto.QnaResponseDTO;
 import com.example.spring.global.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

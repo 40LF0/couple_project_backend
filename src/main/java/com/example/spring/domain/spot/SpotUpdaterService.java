@@ -1,9 +1,9 @@
-package com.example.spring.domain.spotUpdater;
+package com.example.spring.domain.spot;
 
-import com.example.spring.domain.spotUpdater.domain.Spot;
-import com.example.spring.domain.spotUpdater.dto.PlacesNearbySearchResponse;
-import com.example.spring.domain.spotUpdater.enums.SpotArea;
-import com.example.spring.domain.spotUpdater.enums.SpotType;
+import com.example.spring.domain.spot.domain.Spot;
+import com.example.spring.domain.spot.dto.PlacesNearbySearchResponse;
+import com.example.spring.domain.spot.enums.SpotArea;
+import com.example.spring.domain.spot.enums.SpotType;
 import com.example.spring.global.utils.UtilsFunctions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

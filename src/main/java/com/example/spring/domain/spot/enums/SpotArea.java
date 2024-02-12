@@ -1,10 +1,9 @@
-package com.example.spring.domain.spotUpdater.enums;
+package com.example.spring.domain.spot.enums;
 
 import com.example.spring.global.apiResponse.code.status.ErrorStatus;
 import com.example.spring.global.apiResponse.exception.GeneralException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.Arrays;
 import java.util.List;

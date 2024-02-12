@@ -1,8 +1,7 @@
-package com.example.spring.domain.spotUpdater.domain;
+package com.example.spring.domain.spot.domain;
 
-import com.example.spring.domain.spotUpdater.dto.PlacesNearbySearchResponse;
-import com.example.spring.domain.spotUpdater.enums.SpotArea;
-import com.example.spring.domain.spotUpdater.enums.SpotType;
+import com.example.spring.domain.spot.enums.SpotArea;
+import com.example.spring.domain.spot.enums.SpotType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

@@ -1,8 +1,8 @@
 package com.example.spring.global.config.initializer;
 
-import com.example.spring.domain.spotUpdater.SpotUpdaterService;
-import com.example.spring.domain.spotUpdater.enums.SpotArea;
-import com.example.spring.domain.spotUpdater.enums.SpotType;
+import com.example.spring.domain.spot.SpotUpdaterService;
+import com.example.spring.domain.spot.enums.SpotArea;
+import com.example.spring.domain.spot.enums.SpotType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

@@ -1,4 +1,4 @@
-package com.example.spring.domain.spotUpdater;
+package com.example.spring.domain.spot;
 
 
 import com.example.spring.global.apiResponse.ApiResponse;

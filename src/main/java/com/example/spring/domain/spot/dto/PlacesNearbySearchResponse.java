@@ -1,7 +1,6 @@
-package com.example.spring.domain.spotUpdater.dto;
+package com.example.spring.domain.spot.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.example.spring.domain.spotUpdater.enums;
+package com.example.spring.domain.spot.enums;
 
 import com.example.spring.global.apiResponse.code.status.ErrorStatus;
 import com.example.spring.global.apiResponse.exception.GeneralException;

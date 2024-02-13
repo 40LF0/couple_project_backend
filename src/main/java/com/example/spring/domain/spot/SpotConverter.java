@@ -2,8 +2,11 @@ package com.example.spring.domain.spot;
 
 import com.example.spring.domain.spot.domain.Spot;
 import com.example.spring.domain.spot.dto.PlacesNearbySearchResponse;
+import com.example.spring.domain.spot.dto.RecommendResponseDTO;
 import com.example.spring.domain.spot.enums.SpotArea;
 import com.example.spring.domain.spot.enums.SpotType;
+
+import java.util.List;
 
 public class SpotConverter {
 
@@ -17,6 +20,26 @@ public class SpotConverter {
                 .rating(place.getRating())
                 .spotArea(spotArea)
                 .spotType(spotType)
+                .build();
+    }
+
+    public static RecommendResponseDTO.SpotListDTO spotListToSpotDTOList(List<Spot> spotList) {
+        List<RecommendResponseDTO.SpotDTO> spotDTOS = spotList.stream().map(SpotConverter::SpotToSpotDTO).toList();
+        return RecommendResponseDTO.SpotListDTO.builder()
+                .spotDTOList(spotDTOS)
+                .build();
+    }
+
+    public static RecommendResponseDTO.SpotDTO SpotToSpotDTO(Spot spot) {
+        return RecommendResponseDTO.SpotDTO.builder()
+                .spotId(spot.getSpotId())
+                .name(spot.getName())
+                .lat(spot.getLat())
+                .lng(spot.getLng())
+                .address(spot.getAddress())
+                .rating(spot.getRating())
+                .areaName(spot.getSpotArea().getKey())
+                .spotType(spot.getSpotType().getKey())
                 .build();
     }
 }

@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 @Getter
 @AllArgsConstructor
 public enum SpotType {
-    맛집("맛집"),
-    카페("카페"),
-    술집("술집");
+    RESTAURANT("맛집"),
+    CAFE("카페"),
+    BAR("술집");
 
     private final String key;
     public static SpotType findByKey(String key) {

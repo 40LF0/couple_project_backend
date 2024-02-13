@@ -22,8 +22,8 @@ public class SpotUpdaterService {
     private final RestTemplate restTemplate;
     @Value("${google.places.api.key}")
     private String apiKey;
-    private final String GOOGLE_PLACES_SEARCH_NEARBY_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
-    private final int RADIUS = 1500;
+    private static final String GOOGLE_PLACES_SEARCH_NEARBY_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
+    private static final int RADIUS = 1500;
     @Transactional
     public void updateSpot(String location, String keyword) {
         SpotArea spotArea = SpotArea.findByKey(location);
